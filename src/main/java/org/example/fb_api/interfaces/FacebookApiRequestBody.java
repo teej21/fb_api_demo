@@ -1,12 +1,9 @@
 package org.example.fb_api.interfaces;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@NoArgsConstructor
-@Setter
-@Getter
+@RequiredArgsConstructor
+@Data
 public class FacebookApiRequestBody {
     private String tid;
     private String msisdn;

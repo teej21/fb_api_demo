@@ -4,6 +4,8 @@ import org.example.fb_api.interfaces.FacebookApiRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -58,6 +60,9 @@ public class FacebookApiService {
                     .queryParam("hmac", hmac)
                     .queryParam("access_token", accessToken)
                     .toUriString();
+            System.out.println(url);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<FacebookApiRequestBody> request = new HttpEntity<>(requestBody);
             ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);

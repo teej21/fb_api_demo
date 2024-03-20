@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/intern/fb_api")
+
 public class FacebookApiController {
 
     private final FacebookApiService facebookApiService;
@@ -16,7 +16,7 @@ public class FacebookApiController {
         this.facebookApiService = facebookApiService;
     }
 
-
+//url  localhost:8080/postData
     @PostMapping("/postData")
     public String postData(
             @RequestParam String carrierId,
