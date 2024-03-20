@@ -1,6 +1,7 @@
-package org.example.fb_api.interfaces;
+package org.example.fb_api.models;
 
 import lombok.*;
+
 
 @RequiredArgsConstructor
 @Data
@@ -8,11 +9,11 @@ public class FacebookApiRequestBody {
     private String tid;
     private String msisdn;
 
-    private EventTypeEnum event;
+    private Enum.EventType event;
 
-    private ResultCodeEnum result_code;
+    private Enum.ResultCode result_code;
     private String result_message;
-    private InventoryTypeEnum inventory_type;
+    private Enum.InventoryType inventory_type;
 
     private Payment payment;
 

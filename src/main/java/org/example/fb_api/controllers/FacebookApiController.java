@@ -1,8 +1,9 @@
 package org.example.fb_api.controllers;
 
-import org.example.fb_api.interfaces.*;
+import org.example.fb_api.models.*;
 import org.example.fb_api.services.FacebookApiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +19,7 @@ public class FacebookApiController {
 
 //url  localhost:8080/postData
     @PostMapping("/postData")
-    public String postData(
+    public ResponseEntity<String> postData(
             @RequestParam String carrierId,
             @RequestParam String timestamp,
             @RequestParam String secret,

@@ -1,6 +1,6 @@
 package org.example.fb_api.services;
 
-import org.example.fb_api.interfaces.FacebookApiRequestBody;
+import org.example.fb_api.models.FacebookApiRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -51,25 +51,28 @@ public class FacebookApiService {
     }
 
 
-    public String postData(String carrierId, String timestamp, String secret, String accessToken, FacebookApiRequestBody requestBody) {
-        try {
-            String hmac = generateHmacSHA256(timestamp, carrierId, secret);
-            String url = UriComponentsBuilder.fromHttpUrl(apiEndpoint)
-                    .queryParam("timestamp", timestamp)
-                    .queryParam("carrier_id", carrierId)
-                    .queryParam("hmac", hmac)
-                    .queryParam("access_token", accessToken)
-                    .toUriString();
-            System.out.println(url);
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+    public ResponseEntity<String> postData(String carrierId, String timestamp, String secret, String accessToken, FacebookApiRequestBody requestBody) {
 
-            HttpEntity<FacebookApiRequestBody> request = new HttpEntity<>(requestBody);
-            ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
-            return response.getBody();
+        String hmac = generateHmacSHA256(timestamp, carrierId, secret);
+        String url = UriComponentsBuilder.fromHttpUrl(apiEndpoint)
+                .queryParam("timestamp", timestamp)
+                .queryParam("carrier_id", carrierId)
+                .queryParam("hmac", hmac)
+                .queryParam("access_token", accessToken)
+                .toUriString();
+        System.out.println(url);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<FacebookApiRequestBody> request = new HttpEntity<>(requestBody);
+        ResponseEntity<String> response;
+        try {
+            response = restTemplate.postForEntity(url, request, String.class);
+            System.out.println("ok::" + response.getBody());
+
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            response = ResponseEntity.badRequest().body(e.getMessage());
         }
+        return response;
     }
 }
